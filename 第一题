@@ -24,15 +24,13 @@
 
 题解：
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
+    def twoSum(self, nums, target):
         n = len(nums)
         for i in range(n):
             for j in range(i + 1, n):
                 if nums[i] + nums[j] == target:
                     return [i, j]
         
-        return []
+   
 
-注解：
-1.nums: List[int], target: int    #冒号后写明数据类型
-2.-> List[int]    #Python 3 -> 是函数注释的一部分，表示函数返回值的类型。
+
