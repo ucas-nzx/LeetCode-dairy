@@ -1,0 +1,54 @@
+14.最长公共前缀
+编写一个函数来查找字符串数组中的最长公共前缀。
+如果不存在公共前缀，返回空字符串 ""。
+
+示例 1：
+输入：strs = ["flower","flow","flight"]
+输出："fl"
+
+示例 2：
+输入：strs = ["dog","racecar","car"]
+输出：""
+解释：输入不存在公共前缀。
+
+提示：
+1 <= strs.length <= 200
+0 <= strs[i].length <= 200
+strs[i] 仅由小写英文字母组成
+
+题解：
+横向扫描
+用LCP(S_1...S_n)表示字符串S_1...S_n的最长公共前缀。
+可以得到以下结论：
+LCP(S_1...S_n)=LCP(LCP(LCP(S_1,S_2),S_3),...S_n)
+
+  基于该结论，可以得到一种查找字符串数组中的最长公共前缀的简单方法。依次遍历字符串数组中的每个字符串，对于每个遍历到的字符串，
+更新最长公共前缀，当遍历完所有的字符串以后，即可得到字符串数组中的最长公共前缀。
+  如果在尚未遍历完所有的字符串时，最长公共前缀已经是空串，则最长公共前缀一定是空串，因此不需要继续遍历剩下的字符串，直接返回空串即可。
+
+代码：
+class Solution:
+    def longestCommonPrefix(self, strs):
+        if not strs:
+            return ""
+        
+        prefix, count = strs[0], len(strs)
+        for i in range(1, count):
+            prefix = self.lcp(prefix, strs[i])
+            if not prefix:
+                break
+        
+        return prefix
+
+    def lcp(self, str1, str2):
+        length, index = min(len(str1), len(str2)), 0
+        while index < length and str1[index] == str2[index]:
+            index += 1
+        return str1[:index]
+
+注解：
+if not 就是一个判断语句，not 表示 非，写成这个样子可能就理解了：
+if not cond:
+    do_something()
+意思就是如果 cond 为 “假值” （False，None，"" 等）时，执行分支里的语句。
+
